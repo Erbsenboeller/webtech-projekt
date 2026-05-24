@@ -33,19 +33,26 @@ document.addEventListener("DOMContentLoaded", async () => {
     //Alle Kurse durchgehen und zur Auswahl auflisten mit ihren Vorlesungen, Übungen und Turorien
     alleKurse.forEach(kurs => {
         //Formular zur Auswahl der Kurse erstellen
+        const fieldset = document.createElement('fieldset');
+        fieldset.setAttribute('name', `${kurs.id}`);
+        // fieldset.setAttribute('disabled', `disabled`);
+        const legend = document.createElement('legend');
+        
         const kursinput = document.createElement('input');
-        kursinput.setAttribute('type', 'checkbox');
+        kursinput.setAttribute('type', 'checkbox');        
+        
         kursinput.setAttribute('id', `${kurs.id}`);
         kursinput.setAttribute('value', `${kurs.name}`);
         kursinput.setAttribute('name', `kurs`);
         const kurslabel = document.createElement('label');
         kurslabel.setAttribute('for', `${kurs.id}`);
         kurslabel.textContent = kurs.name;
-        const br = document.createElement('br');
 
-        form.appendChild(kursinput);
-        form.appendChild(kurslabel);
-        form.appendChild(br);
+        legend.appendChild(kursinput);
+        legend.appendChild(kurslabel);
+        fieldset.appendChild(legend);
+        form.appendChild(fieldset);
+
 
         //In dem Formular für jeden Kurs die Übungen zur Auswahl erstellen
         kurs.termine.forEach(termin => {
@@ -59,7 +66,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 terminInput.setAttribute('type', 'radio');
                 // terminInput.setAttribute('type', 'hidden');
                 terminInput.setAttribute('value', `${termin.id}`);
-                form.appendChild(terminInput);
+                fieldset.appendChild(terminInput);
             }
             const terminlabel = document.createElement('label');
             terminlabel.setAttribute('id', `${termin.id}`);
@@ -67,8 +74,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             terminlabel.textContent = termin.typ + ": " + termin.tag + "s " + termin.block + ". Block";
             const br = document.createElement('br');
             
-            form.appendChild(terminlabel);
-            form.appendChild(br);
+            fieldset.appendChild(terminlabel);
+            fieldset.appendChild(br);
         })
 
         
@@ -80,7 +87,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     form.appendChild(button);
     
     container.appendChild(form);
-
 
 
     //Den Stundenplan erstellen, indem eine leeres Stundenplangerüst erstellt wird und dann die Daten nach dem Knopfdruck einfügen
