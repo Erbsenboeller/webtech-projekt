@@ -1,0 +1,10 @@
+header{
+display: flex;
+position: absolute;
+}
+body{
+    gap: 50px;
+    background-color: antiquewhite;
+    display: flex;
+    gap: 50px;
+}
