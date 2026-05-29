@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         //Formular zur Auswahl der Kurse erstellen
         const fieldset = document.createElement('fieldset');
         fieldset.setAttribute('name', `${kurs.id}`);
-        // fieldset.setAttribute('disabled', `disabled`);
+        fieldset.setAttribute('disabled', `disabled`);
         const legend = document.createElement('legend');
         
         const kursinput = document.createElement('input');
@@ -53,6 +53,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         fieldset.appendChild(legend);
         form.appendChild(fieldset);
 
+        kursinput.addEventListener('click', function() {
+            fieldset.disabled = !fieldset.disabled;
+        });
+
 
         //In dem Formular für jeden Kurs die Übungen zur Auswahl erstellen
         kurs.termine.forEach(termin => {
@@ -61,7 +65,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 if (termin.id == "UE1") {
                     terminInput.setAttribute('checked', `checked`);
                 }
-                terminInput.setAttribute('name', `${kurs.name}`);
+                terminInput.setAttribute('name', `${kurs.id}`);
                 terminInput.setAttribute('id', `${termin.id}`);
                 terminInput.setAttribute('type', 'radio');
                 // terminInput.setAttribute('type', 'hidden');
@@ -105,15 +109,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     const zeiten = ['8.15<br> - <br>9.45', '10.15<br> - <br>11.45', '12.30<br> - <br>14.00', '14.15<br> - <br>15.45', '16.00<br> - <br>17.30', '17.30<br> - <br>19.00'];
     for (let i = 0; i < 6 ; i++) {
         const block = document.createElement('tr');
-        bloecke.push(block);
         const zeit1 = document.createElement('th');
         zeit1.innerHTML = zeiten[i];
         block.appendChild(zeit1);
+        const tage = [];
         for (let i = 0; i < 5; i++) {
             const feld = document.createElement('td');
             block.appendChild(feld);
+            tage.push(feld);
         }
         table.appendChild(block);
+        bloecke.push(tage);
     }
     stundenplan.appendChild(table);
 
@@ -121,6 +127,20 @@ document.addEventListener("DOMContentLoaded", async () => {
     //Wenn der Bestätigungsbutton gedrückt wurde, werden die Daten in den Stundenplan eingefügt
     button.addEventListener("click", async () => {
         console.log("Auf Button geklickt");
+
+        //Die Daten aus dem Formular holen
+        const kurse = document.querySelectorAll('input[name="kurs"]:checked');
+
+        kurse.forEach(kurs => {
+            const id = kurs.getAttribute('id');
+            
+            const uebung = document.querySelectorAll(`input[name="${id}"]:checked`)
+            
+            
+        });
+
+
+
         //bloecke sind die Zeilen, also die bloecke 1 bis 6
 
 
